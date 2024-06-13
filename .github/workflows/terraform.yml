@@ -43,23 +43,23 @@ jobs:
       - name: Plan Terraform
         run: terraform plan -out=plan.tfplan
         env:
-          GITHUB_OWNER: ${{ secrets.GH_OWNER }}
-          GITHUB_REPO: ${{ secrets.GH_REPO }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          RUNNER_AMI: ${{ secrets.RUNNER_AMI }}
-          INSTANCE_TYPE: ${{ secrets.INSTANCE_TYPE }}
-          KEY_NAME: ${{ secrets.KEY_NAME }}
-          VPC_ID: ${{ secrets.VPC_ID }}
-          SUBNET_ID: ${{ secrets.SUBNET_ID }}
+          TF_VAR_github_owner: ${{ secrets.GH_OWNER }}
+          TF_VAR_github_repo: ${{ secrets.GH_REPO }}
+          TF_VAR_github_token: ${{ secrets.GH_TOKEN }}
+          TF_VAR_runner_ami: ${{ secrets.RUNNER_AMI }}
+          TF_VAR_instance_type: ${{ secrets.INSTANCE_TYPE }}
+          TF_VAR_key_name: ${{ secrets.KEY_NAME }}
+          TF_VAR_vpc_id: ${{ secrets.VPC_ID }}
+          TF_VAR_subnet_id: ${{ secrets.SUBNET_ID }}
 
       - name: Apply Terraform
         run: terraform apply -auto-approve plan.tfplan
         env:
-          GITHUB_OWNER: ${{ secrets.GH_OWNER }}
-          GITHUB_REPO: ${{ secrets.GH_REPO }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          RUNNER_AMI: ${{ secrets.RUNNER_AMI }}
-          INSTANCE_TYPE: ${{ secrets.INSTANCE_TYPE }}
-          KEY_NAME: ${{ secrets.KEY_NAME }}
-          VPC_ID: ${{ secrets.VPC_ID }}
-          SUBNET_ID: ${{ secrets.SUBNET_ID }}
+          TF_VAR_github_owner: ${{ secrets.GH_OWNER }}
+          TF_VAR_github_repo: ${{ secrets.GH_REPO }}
+          TF_VAR_github_token: ${{ secrets.GH_TOKEN }}
+          TF_VAR_runner_ami: ${{ secrets.RUNNER_AMI }}
+          TF_VAR_instance_type: ${{ secrets.INSTANCE_TYPE }}
+          TF_VAR_key_name: ${{ secrets.KEY_NAME }}
+          TF_VAR_vpc_id: ${{ secrets.VPC_ID }}
+          TF_VAR_subnet_id: ${{ secrets.SUBNET_ID }}
