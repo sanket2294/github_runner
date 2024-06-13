@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - test-13-june
   pull_request:
     branches:
       - main
+      - test-13-june
 
 jobs:
   terraform:
