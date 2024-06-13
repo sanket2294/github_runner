@@ -43,9 +43,9 @@ jobs:
       - name: Plan Terraform
         run: terraform plan -out=plan.tfplan
         env:
-          GH_OWNER: ${{ secrets.GH_OWNER }}
-          GH_REPO: ${{ secrets.GH_REPO }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_OWNER: ${{ secrets.GH_OWNER }}
+          GITHUB_REPO: ${{ secrets.GH_REPO }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           RUNNER_AMI: ${{ secrets.RUNNER_AMI }}
           INSTANCE_TYPE: ${{ secrets.INSTANCE_TYPE }}
           KEY_NAME: ${{ secrets.KEY_NAME }}
@@ -55,9 +55,9 @@ jobs:
       - name: Apply Terraform
         run: terraform apply -auto-approve plan.tfplan
         env:
-          GH_OWNER: ${{ secrets.GH_OWNER }}
-          GH_REPO: ${{ secrets.GH_REPO }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_OWNER: ${{ secrets.GH_OWNER }}
+          GITHUB_REPO: ${{ secrets.GH_REPO }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           RUNNER_AMI: ${{ secrets.RUNNER_AMI }}
           INSTANCE_TYPE: ${{ secrets.INSTANCE_TYPE }}
           KEY_NAME: ${{ secrets.KEY_NAME }}
