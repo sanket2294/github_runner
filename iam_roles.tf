@@ -8,7 +8,7 @@ resource "aws_iam_role" "cross_account_role" {
         Action = "sts:AssumeRole",
         Effect = "Allow",
         Principal = {
-          AWS = "arn:aws:iam::<AWS_ACCOUNT_ID>:root"
+          AWS = "arn:aws:iam::211125674466:root"
         }
       }
     ]
