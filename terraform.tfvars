@@ -1,0 +1,7 @@
+github_owner   = "sanket2294"
+github_repo    = "github_runner"
+runner_ami     = "ami-09040d770ffe2224f"
+instance_type  = "t3.medium"
+key_name       = "github_runner"
+vpc_id         = "vpc-018a7cab95403e2a9"
+subnet_id      = "subnet-046dd98cabbf642a9"
