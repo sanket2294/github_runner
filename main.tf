@@ -1,17 +1,3 @@
-# Outputs for debugging
-output "github_owner" {
-  value = var.github_owner
-}
-
-output "github_repo" {
-  value = var.github_repo
-}
-
-output "github_token" {
-  value = var.github_token
-}
-
-# Main module configuration
 module "ec2_github_runner" {
   source = "./modules/ec2"
 
@@ -25,9 +11,28 @@ module "ec2_github_runner" {
     Name = "GitHub-Runner"
   }
 
-  user_data = templatefile("${path.module}/bootstrap.sh.tpl", {
-    github_owner = var.github_owner,
-    github_repo  = var.github_repo,
-    github_token = var.github_token
-  })
+  user_data = <<-EOF
+    #!/bin/bash
+
+    # Variables for debugging
+    echo "GITHUB_OWNER: ${var.github_owner}"
+    echo "GITHUB_REPO: ${var.github_repo}"
+    echo "GITHUB_TOKEN: ${var.github_token}"
+
+    # Update and install necessary packages
+    sudo apt-get update
+    sudo apt-get install -y jq curl
+
+    # Download and install GitHub runner
+    mkdir actions-runner && cd actions-runner
+    curl -o actions-runner-linux-x64-2.285.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.285.0/actions-runner-linux-x64-2.285.0.tar.gz
+    tar xzf ./actions-runner-linux-x64-2.285.0.tar.gz
+
+    # Configure the runner
+    ./config.sh --url https://github.com/${var.github_owner}/${var.github_repo} --token ${var.github_token}
+
+    # Install the service
+    sudo ./svc.sh install
+    sudo ./svc.sh start
+  EOF
 }
