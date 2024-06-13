@@ -11,7 +11,7 @@ module "ec2_github_runner" {
     Name = "GitHub-Runner"
   }
 
-  user_data = templatefile("bootstrap.sh.tpl", {
+  user_data = templatefile("${path.module}/bootstrap.sh.tpl", {
     github_owner = var.github_owner,
     github_repo  = var.github_repo,
     github_token = var.github_token
