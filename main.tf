@@ -1,3 +1,17 @@
+# Outputs for debugging
+output "github_owner" {
+  value = var.github_owner
+}
+
+output "github_repo" {
+  value = var.github_repo
+}
+
+output "github_token" {
+  value = var.github_token
+}
+
+# Main module configuration
 module "ec2_github_runner" {
   source = "./modules/ec2"
 
