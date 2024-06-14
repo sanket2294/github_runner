@@ -8,7 +8,3 @@ resource "aws_instance" "runner" {
 
   user_data = var.user_data
 }
-
-data "aws_vpc" "selected" {
-  id = var.vpc_id
-}

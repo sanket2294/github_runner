@@ -64,13 +64,3 @@ module "ec2_github_runner" {
     sudo ./svc.sh start
   EOF
 }
-
-data "aws_vpc" "selected" {
-  id = var.vpc_id
-}
-
-data "aws_subnet" "selected" {
-  id = var.subnet_id
-}
-
-data "aws_caller_identity" "current" {}
