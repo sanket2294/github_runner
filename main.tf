@@ -1,11 +1,39 @@
+provider "aws" {
+  region = var.aws_region
+}
+
+# Create IAM Role for GitHub Actions
+resource "aws_iam_role" "github_actions_role" {
+  name = "GitHubActionsRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+# Attach the necessary policies to the role
+resource "aws_iam_role_policy_attachment" "attach_policy" {
+  role       = aws_iam_role.github_actions_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"  # Adjust based on the necessary permissions
+}
+
 module "ec2_github_runner" {
   source = "./modules/ec2"
 
   ami           = var.runner_ami
   instance_type = var.instance_type
   key_name      = var.key_name
-  vpc_id        = var.vpc_id
   subnet_id     = var.subnet_id
+  vpc_id        = var.vpc_id
 
   tags = {
     Name = "GitHub-Runner"
@@ -36,3 +64,13 @@ module "ec2_github_runner" {
     sudo ./svc.sh start
   EOF
 }
+
+data "aws_vpc" "selected" {
+  id = var.vpc_id
+}
+
+data "aws_subnet" "selected" {
+  id = var.subnet_id
+}
+
+data "aws_caller_identity" "current" {}
