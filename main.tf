@@ -49,13 +49,24 @@ module "ec2_github_runner" {
 
     # Update and install necessary packages
     sudo apt-get update
-    sudo apt-get install -y jq curl
+    sudo apt-get install -y curl jq libicu-dev libssl3
 
     # Download and install GitHub runner
     mkdir actions-runner && cd actions-runner
     curl -o actions-runner-linux-x64-2.285.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.285.0/actions-runner-linux-x64-2.285.0.tar.gz
     tar xzf ./actions-runner-linux-x64-2.285.0.tar.gz
 
+    # Configure SSL
+    sudo ln -sf /lib/x86_64-linux-gnu/libssl.so.3 /usr/lib/x86_64-linux-gnu/libssl.so
+    sudo ln -sf /lib/x86_64-linux-gnu/libcrypto.so.3 /usr/lib/x86_64-linux-gnu/libcrypto.so
+
+    # Ensure system time is synchronized
+    sudo timedatectl set-ntp true
+    
+    # Export necessary environment variables
+    export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:\$LD_LIBRARY_PATH
+    export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
+    
     # Configure the runner
     ./config.sh --url https://github.com/${var.github_owner}/${var.github_repo} --token ${var.github_token}
 
